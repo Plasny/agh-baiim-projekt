@@ -1,0 +1,37 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BAIM Projekt - CSRF</title>
+</head>
+
+<body>
+    <p style="margin-bottom: 0;">Zadania do wykonania:</p>
+    <ul style="margin-top: 0; ">
+        <li><a href="task1.html">Task 1</a> {{if .Task1Completed}}✅{{else}}{{end}}</li>
+        <li><a href="task2.html">Task 2</a> {{if .Task2Completed}}✅{{else}}{{end}}</li>
+        <li><a href="task3.html">Task 3</a> {{if .Task3Completed}}✅{{else}}{{end}}</li>
+        <li><a href="task4.html">Task 4</a> {{if .Task4Completed}}✅{{else}}{{end}}</li>
+    </ul>
+
+    <hr>
+
+    <details>
+        <summary>Jak działają te zadania</summary>
+        Po kliknięciu Load page:
+        <br>- Pobierana jest zawartość z `textarea`.
+        <br>- Tworzony jest obiekt Blob z tym HTML-em.
+        <br>- Tworzony jest tymczasowy URL do tego Blob-a.
+        <br>- Przeglądarka otwiera ten BLOB w iframe.
+
+        Po kliknięciu Check answer:
+        <br>- Wysyłane jest żądanie POST do serwera w celu sprawdzenia, czy zadanie zostało wykonane poprawnie.
+        <br>- W tym celu używane są pliki cookie przeglądarki.
+    </details>
+</body>
+
+</html>
+{{end}}

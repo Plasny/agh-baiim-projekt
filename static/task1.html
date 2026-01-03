@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BAIM Projekt - TASK 1</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadPage = document.getElementById("loadPage");
+            frame = document.getElementById("resultFrame");
+            checkAnswer = document.getElementById("checkAnswer");
+            loadPage.addEventListener("click", function () {
+                const siteContent = document.getElementById("siteContent").value;
+                const blob = new Blob([siteContent], {type: 'text/html'});
+                const url = URL.createObjectURL(blob);
+                frame.src = url;
+            });
+            checkAnswer.addEventListener("click", function () {
+                fetch('/session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.task1_completed) {
+                        alert('Zadanie wykonane poprawnie!');
+                            window.location.href = '/';
+                    } else {
+                        alert('Zadanie nie zostało jeszcze wykonane poprawnie. Spróbuj ponownie.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h2>Zadanie 1.</h2>
+    <p>Przygotuj stronę, która po załadowaniu (bez udziału użytkownika) automatycznie zmieni hasło na stronie ustawień aplikacji (http://localhost:8081/settings) na "abc12345".</p>
+
+    <p>Najpierw zobacz jak to działa: <a href="http://localhost:8081/settings">/settings</a></p>
+
+    <details>
+        <summary>Podpowiedź 1 (od czego zacząć)</summary>
+        Zobacz jak wygląda ruch sieciowy w zakładce Network narzędzi developerskich przeglądarki podczas zmiany hasła.<br />
+        Zakładkę tą można otworzyć za pomocą skrótu klawiaturowego F12 lub Ctrl+Shift+I (Cmd+Option+I na Macu).
+    </details>
+    <details>
+        <summary>Podpowiedź 2 (co warto przeczytać)</summary>
+        https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event<br />
+        https://developer.mozilla.org/en-US/docs/Web/API/Window/location
+        <!-- https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch -->
+    </details>
+
+    <hr>
+
+    <div style="display: flex; gap: 10px;">
+
+        <textarea id="siteContent" style="width: 100%; height: 50vh;">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Local Content</title>
+    <script>
+        function log() {
+            console.log('hello')
+        }
+    </script>
+</head>
+
+<body onload="log()">
+    <p>Local Content</p>
+</body>
+
+</html>
+        </textarea>
+
+        <iframe id="resultFrame" style="width: 100%; height: 50vh;"></iframe>
+
+    </div>
+
+    <button id="loadPage">Load page</button>
+    <button id="checkAnswer">Check answer</button>
+    <button onclick="window.history.back()">Go back</button>
+</body>
+
+</html>
