@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BAIM Projekt - TASK 2</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadPage = document.getElementById("loadPage");
+            frame = document.getElementById("resultFrame");
+            checkAnswer = document.getElementById("checkAnswer");
+            loadPage.addEventListener("click", function () {
+                const siteContent = document.getElementById("siteContent").value;
+                const blob = new Blob([siteContent], {type: 'text/html'});
+                const url = URL.createObjectURL(blob);
+                frame.src = url;
+            });
+            checkAnswer.addEventListener("click", function () {
+                fetch('/session')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.task2_completed) {
+                        alert('Zadanie wykonane poprawnie!');
+                            window.location.href = '/';
+                    } else {
+                        alert('Zadanie nie zostało jeszcze wykonane poprawnie. Spróbuj ponownie.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h2>Zadanie 2.</h2>
+    <p>Przygotuj stronę, która po załadowaniu (bez udziału użytkownika) automatycznie zmieni status na stronie ustawień aplikacji (http://localhost:8081/task2) na "wykonano".</p>
+
+    <p>Najpierw zobacz jak działa ta strona: <a href="http://localhost:8081/task2">/task2</a></p>
+
+    <details>
+        <summary>Podpowiedź 1 (od czego zacząć)</summary>
+        Zobacz jak wygląda ruch sieciowy w zakładce Network narzędzi developerskich przeglądarki podczas zmiany hasła. Co się zmieniło względem 1 zadania?
+    </details>
+    <details>
+        <summary>Podpowiedź 2 (co warto przeczytać)</summary>
+        https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS<br />
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form
+    </details>
+
+    <hr>
+
+    <div style="display: flex; gap: 10px;">
+
+        <textarea id="siteContent" style="width: 100%; height: 50vh;">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Local Content</title>
+    <script>
+        function log() {
+            console.log('hello')
+        }
+    </script>
+</head>
+
+<body onload="log()">
+    <p>Magna aliquip commodo irure minim est proident consequat excepteur irure duis et sunt consectetur tempor. Velit cupidatat magna dolor amet consequat nisi id mollit ea eu. Lorem incididunt veniam tempor. Duis nostrud eiusmod incididunt proident reprehenderit nostrud labore aute.</p>
+</body>
+
+</html>
+        </textarea>
+
+        <iframe id="resultFrame" style="width: 100%; height: 50vh;"></iframe>
+
+    </div>
+
+    <button id="loadPage">Load page</button>
+    <button id="checkAnswer">Check answer</button>
+    <button onclick="window.history.back()">Go back</button>
+</body>
+
+</html>

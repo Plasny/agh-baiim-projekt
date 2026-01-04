@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func SettingsHandler(w http.ResponseWriter, r *http.Request) {
+func Task1Handler(w http.ResponseWriter, r *http.Request) {
 	sessionID, ok := r.Context().Value(sessionKey).(string)
 	if !ok {
 		http.Error(w, "Session not found", http.StatusUnauthorized)
@@ -14,9 +14,9 @@ func SettingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session := Sessions[sessionID]
-	password := r.URL.Query().Get("password")
-
 	defer func () { Sessions[sessionID] = session }()
+
+	password := r.URL.Query().Get("password")
 
 	if password != "" {
 		session.task1Password = password
@@ -40,7 +40,7 @@ func SettingsHandler(w http.ResponseWriter, r *http.Request) {
 		<html>
 		<body>
 			<h2>Settings Menu</h2>
-			<form method="get" action="/settings">
+			<form method="get" action="/task1">
 				<label>Password: <input type="password" name="password"></label><br>
 				<input type="submit" value="Update">
 			</form>

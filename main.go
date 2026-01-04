@@ -17,7 +17,8 @@ func main() {
 	tasks.Handle("/", http.FileServer(http.Dir("static")))
 
 	app := http.NewServeMux()
-	app.Handle("/settings", routes.Middleware(http.HandlerFunc(routes.SettingsHandler)))
+	app.Handle("/task1", routes.Middleware(http.HandlerFunc(routes.Task1Handler)))
+	app.Handle("/task2", routes.Middleware(http.HandlerFunc(routes.Task2Handler)))
 
 	go (func() {
 		wg.Add(1)

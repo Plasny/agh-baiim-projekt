@@ -16,6 +16,7 @@ type Session struct {
 	task1Password  string
 
 	Task2Completed bool `json:"task2_completed"`
+	task2Status string
 	Task3Completed bool `json:"task3_completed"`
 	Task4Completed bool `json:"task4_completed"`
 }
