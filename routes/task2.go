@@ -14,23 +14,33 @@ func Task2Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session := Sessions[sessionID]
-	defer func () { Sessions[sessionID] = session }()
+	defer func() { Sessions[sessionID] = session }()
 
-	mode := r.Header.Get("Sec-Fetch-Mode")
-	if mode == "cors" {
-		log.Printf("Blocked CORS request from: %s", r.RemoteAddr)
-		http.Error(w, "Fetch/AJAX requests are not allowed.", http.StatusForbidden)
+	if r.Method == http.MethodGet {
+		fmt.Fprintf(w, `
+			<!DOCTYPE html>
+			<html>
+			<body>
+				<h2>status = %s</h2>
+				<form method="post" action="/task2">
+					<label>status: <input type="text" name="status"></label><br>
+					<input type="submit" value="Update">
+				</form>
+			</body>
+			</html>
+		`, session.task2Status)
+
 		return
 	}
 
 	if r.Method == http.MethodPost {
 		status := r.FormValue("status")
 		session.task2Status = status
-		log.Printf("Received status update for session %s: %s", sessionID, status)
+		log.Printf("Received status update for task2, session %s: %s", sessionID, status)
 
 		if status == "wykonano" && r.Header.Get("Origin") == "http://localhost:8080" {
 			session.Task2Completed = true
-			log.Printf("Session %s completed Task 1", sessionID)
+			log.Printf("Session %s completed Task 2", sessionID)
 			fmt.Fprintf(w, `
 				<!DOCTYPE html>
 				<html>
@@ -41,18 +51,10 @@ func Task2Handler(w http.ResponseWriter, r *http.Request) {
 			`)
 			return
 		}
+
+		http.Redirect(w, r, "/task2", http.StatusSeeOther)
+		return
 	}
 
-	fmt.Fprintf(w, `
-		<!DOCTYPE html>
-		<html>
-		<body>
-			<h2>status = %s</h2>
-			<form method="post" action="/task2">
-				<label>status: <input type="text" name="status"></label><br>
-				<input type="submit" value="Update">
-			</form>
-		</body>
-		</html>
-	`, session.task2Status)
+	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
@@ -36,10 +36,19 @@
 </head>
 
 <body>
-    <h2>Zadanie 2.</h2>
+    <h2>Zadanie 2. (Formularz)</h2>
+    <p>Tym razem strona jest trochę minimalnie bardziej zabezpieczona. Wykorzystujemy zapytanie POST, dodatkowo serwer blokuje zapytania wykonywane za pomocą fetch-a. Jednak dalej możliwe jest zmienienie statusu. Jak to zrobisz?</p>
+
     <p>Przygotuj stronę, która po załadowaniu (bez udziału użytkownika) automatycznie zmieni status na stronie ustawień aplikacji (http://localhost:8081/task2) na "wykonano".</p>
 
     <p>Najpierw zobacz jak działa ta strona: <a href="http://localhost:8081/task2">/task2</a></p>
+
+    <details>
+      <summary>Zadanie dodatkowe</summary>
+      <p>Spróbuj to zrobić w taki sposób żeby użytkownik nie zobaczył że status został zmieniony. Żeby strona nie została przekierowana.</p>
+    </details>
+
+    <hr>
 
     <details>
         <summary>Podpowiedź 1 (od czego zacząć)</summary>
@@ -47,15 +56,42 @@
     </details>
     <details>
         <summary>Podpowiedź 2 (co warto przeczytać)</summary>
-        https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS<br />
-        https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form
+        <ul style="margin-top: 0;">
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS" target="_blank">
+                    CORS Guide (MDN)
+                </a>
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form" target="_blank">
+                    HTML form element (MDN)
+                </a>
+            </li>
+        </ul>
+    </details>
+    <details>
+        <summary>Podpowiedź do zadania dodatkowego</summary>
+        <ul style="margin-top: 0;">
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form#target" target="_blank">
+                    HTML form element - target field (MDN)
+                </a>
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe" target="_blank">
+                    HTML iframe element (MDN)
+                </a>
+            </li>
+        </ul>
     </details>
 
     <hr>
 
     <div style="display: flex; gap: 10px;">
 
-        <textarea id="siteContent" style="width: 100%; height: 50vh;">
+        <div style="width: 100%;">
+            <label for="siteContent"><strong>HTML Source</strong></label><br />
+            <textarea id="siteContent" style="width: calc(100% - 10px); height: calc(50vh - 10px); border: 1px solid black; padding: 5px;">
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,19 +105,23 @@
 </head>
 
 <body onload="log()">
-    <p>Magna aliquip commodo irure minim est proident consequat excepteur irure duis et sunt consectetur tempor. Velit cupidatat magna dolor amet consequat nisi id mollit ea eu. Lorem incididunt veniam tempor. Duis nostrud eiusmod incididunt proident reprehenderit nostrud labore aute.</p>
+    <p>Occaecat id anim cillum nulla enim incididunt laboris veniam enim elit anim. Anim do pariatur exercitation cupidatat velit. Commodo reprehenderit in est. Officia sint do ut. Cillum dolor elit reprehenderit voluptate occaecat ad proident fugiat quis fugiat duis id consequat commodo excepteur. Qui do dolor aute aute ut nisi culpa nulla exercitation consectetur pariatur eu id aliqua. Esse fugiat ipsum adipisicing esse ad voluptate proident sunt. Aute proident ut enim aliquip cillum magna aute et.</p>
 </body>
 
 </html>
-        </textarea>
+            </textarea>
+        </div>
 
-        <iframe id="resultFrame" style="width: 100%; height: 50vh;"></iframe>
+        <div style="width: 100%;">
+            <label for="resultFrame"><strong>Preview</strong></label><br />
+            <iframe id="resultFrame" style="width: 100%; height: 50vh; border: 1px solid black;"></iframe>
+        </div>
 
     </div>
 
-    <button id="loadPage">Load page</button>
-    <button id="checkAnswer">Check answer</button>
-    <button onclick="window.history.back()">Go back</button>
+    <button id="loadPage">Załaduj stronę</button>
+    <button id="checkAnswer">Sprawdź odpowiedź</button>
+    <button onclick="window.history.back()">Cofnij</button>
 </body>
 
 </html>

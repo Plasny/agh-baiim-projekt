@@ -19,6 +19,7 @@ func main() {
 	app := http.NewServeMux()
 	app.Handle("/task1", routes.Middleware(http.HandlerFunc(routes.Task1Handler)))
 	app.Handle("/task2", routes.Middleware(http.HandlerFunc(routes.Task2Handler)))
+	app.Handle("/task3", routes.Middleware(http.HandlerFunc(routes.Task3Handler)))
 
 	go (func() {
 		wg.Add(1)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
@@ -18,47 +18,84 @@
             });
             checkAnswer.addEventListener("click", function () {
                 fetch('/session')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.task1_completed) {
-                        alert('Zadanie wykonane poprawnie!');
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.task1_completed) {
+                            alert('Zadanie wykonane poprawnie!');
                             window.location.href = '/';
-                    } else {
-                        alert('Zadanie nie zostało jeszcze wykonane poprawnie. Spróbuj ponownie.');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                        } else {
+                            alert('Zadanie nie zostało jeszcze wykonane poprawnie. Spróbuj ponownie.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             });
         });
     </script>
 </head>
 
 <body>
-    <h2>Zadanie 1.</h2>
-    <p>Przygotuj stronę, która po załadowaniu (bez udziału użytkownika) automatycznie zmieni hasło na stronie ustawień aplikacji (http://localhost:8081/task1) na "abc12345".</p>
-    <p>Spróbuj to zrobić na dwa sposoby.</p>
+    <h2>Zadanie 1. (GET)</h2>
+    <p>Ktoś zaimplementował zmianę ustawień konta za pomocą zapytań GET, jak można to wykorzystać?</p>
+
+    <p>Przygotuj stronę, która po załadowaniu (bez udziału użytkownika) automatycznie zmieni hasło na stronie ustawień
+        aplikacji (http://localhost:8081/task1) na "abc12345".</p>
 
     <p>Najpierw zobacz jak działa ta strona: <a href="http://localhost:8081/task1">/task1</a></p>
 
     <details>
+      <summary>Zadanie dodatkowe</summary>
+      <p>Spróbuj to zrobić w taki sposób żeby użytkownik nie zobaczył, że hasło zostało zmienione. Żeby strona nie została przekierowana.</p>
+    </details>
+
+    <hr>
+
+    <details>
         <summary>Podpowiedź 1 (od czego zacząć)</summary>
-        Zobacz jak wygląda ruch sieciowy w zakładce Network narzędzi developerskich przeglądarki podczas zmiany hasła.<br />
+        Zobacz jak wygląda ruch sieciowy w zakładce Network narzędzi developerskich przeglądarki podczas zmiany
+        hasła.<br />
         Zakładkę tą można otworzyć za pomocą skrótu klawiaturowego F12 lub Ctrl+Shift+I (Cmd+Option+I na Macu).
     </details>
     <details>
         <summary>Podpowiedź 2 (co warto przeczytać)</summary>
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event<br />
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/location<br />
-        https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch
+        <ul style="margin-top: 0;">
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event" target="_blank">
+                    Window load event (MDN)
+                </a>
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/location" target="_blank">
+                    Window location (MDN)
+                </a>
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch" target="_blank">
+                    Window fetch (MDN)
+                </a>
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img" target="_blank">
+                    HTML img element (MDN)
+                </a>
+            </li>
+        </ul>
+    </details>
+    <details>
+        <summary>Na jakie sposoby można to zrobić?</summary>
+        - Za pomocą przekierowania (window.location)<br />
+        - Za pomocą fetch API<br />
+        - Za pomocą elementów jak &lt;img&gt; lub &lt;script&gt;<br />
     </details>
 
     <hr>
 
     <div style="display: flex; gap: 10px;">
 
-        <textarea id="siteContent" style="width: 100%; height: 50vh;">
+        <div style="width: 100%;">
+            <label for="siteContent"><strong>HTML Source</strong></label><br />
+            <textarea id="siteContent" style="width: calc(100% - 10px); height: calc(50vh - 10px); border: 1px solid black; padding: 5px;">
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,19 +109,23 @@
 </head>
 
 <body onload="log()">
-    <p>Magna aliquip commodo irure minim est proident consequat excepteur irure duis et sunt consectetur tempor. Velit cupidatat magna dolor amet consequat nisi id mollit ea eu. Lorem incididunt veniam tempor. Duis nostrud eiusmod incididunt proident reprehenderit nostrud labore aute.</p>
+    <p>Occaecat id anim cillum nulla enim incididunt laboris veniam enim elit anim. Anim do pariatur exercitation cupidatat velit. Commodo reprehenderit in est. Officia sint do ut. Cillum dolor elit reprehenderit voluptate occaecat ad proident fugiat quis fugiat duis id consequat commodo excepteur. Qui do dolor aute aute ut nisi culpa nulla exercitation consectetur pariatur eu id aliqua. Esse fugiat ipsum adipisicing esse ad voluptate proident sunt. Aute proident ut enim aliquip cillum magna aute et.</p>
 </body>
 
 </html>
-        </textarea>
+            </textarea>
+        </div>
 
-        <iframe id="resultFrame" style="width: 100%; height: 50vh;"></iframe>
+        <div style="width: 100%;">
+            <label for="resultFrame"><strong>Preview</strong></label><br />
+            <iframe id="resultFrame" style="width: 100%; height: 50vh; border: 1px solid black;"></iframe>
+        </div>
 
     </div>
 
-    <button id="loadPage">Load page</button>
-    <button id="checkAnswer">Check answer</button>
-    <button onclick="window.history.back()">Go back</button>
+    <button id="loadPage">Załaduj stronę</button>
+    <button id="checkAnswer">Sprawdź odpowiedź</button>
+    <button onclick="window.history.back()">Cofnij</button>
 </body>
 
 </html>

@@ -14,7 +14,11 @@ func Task1Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session := Sessions[sessionID]
-	defer func () { Sessions[sessionID] = session }()
+	defer func() { Sessions[sessionID] = session }()
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
 
 	password := r.URL.Query().Get("password")
 
