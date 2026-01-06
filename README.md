@@ -21,7 +21,7 @@ Do uruchomienia serwera wymagany jest zainstalowany język Go.
     ```
 2.  Aplikacja uruchomi dwa serwery, co jest istotne dla niektórych scenariuszy ataków:
     - **Serwer główny** na `http://localhost:8080` (obsługuje m.in. sesje, stronę główną, opisy zadań).
-    - **Serwer z zadaniami** na `http://localhost:8081` (obsługuje podatne endpointy `/task1`, `/task2`, `/task3`).
+    - **Serwer z zadaniami** na `http://localhost:8081` (obsługuje podatne endpointy).
 
 Aby przeprowadzić atak, należy stworzyć osobną stronę HTML (atakującą), która będzie wysyłać żądania do serwera z zadaniami na porcie `8081`.
 
