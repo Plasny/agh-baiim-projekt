@@ -66,7 +66,7 @@ func Middleware(next http.Handler) http.Handler {
 		ctx := context.WithValue(r.Context(), sessionKey, sessionId)
 
 		// --- Logging ------------------------------------------------
-		log.Printf("Session ID: %s, Path: %s, Method: %s, Origin: %s", sessionId, r.URL.Path, r.Method, r.Header.Get("Origin"))
+		log.Printf("Session ID: %s, URL: %s, Method: %s, Origin: %s", sessionId, r.URL.String(), r.Method, r.Header.Get("Origin"))
 
 		// --- Call the next handler ----------------------------------
 		next.ServeHTTP(w, r.WithContext(ctx))

